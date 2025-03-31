@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AD17C856-3086-42FC-96C1-508B1C8D9BD9}|TestProjectNuinit\\TestProjectNuinit.csproj|c:\\dev\\gittests\\winforms-actions-test\\dxapplication\\testprojectnuinit\\testprojectnuinit.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{AD17C856-3086-42FC-96C1-508B1C8D9BD9}|TestProjectNuinit\\TestProjectNuinit.csproj|solutionrelative:testprojectnuinit\\testprojectnuinit.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AD17C856-3086-42FC-96C1-508B1C8D9BD9}|TestProjectNuinit\\TestProjectNuinit.csproj|c:\\dev\\gittests\\winforms-actions-test\\dxapplication\\testprojectnuinit\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AD17C856-3086-42FC-96C1-508B1C8D9BD9}|TestProjectNuinit\\TestProjectNuinit.csproj|solutionrelative:testprojectnuinit\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|c:\\dev\\gittests\\winforms-actions-test\\dxapplication\\dxapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|solutionrelative:dxapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,7 +19,7 @@
       "RelativeMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|solutionrelative:dxapplication\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|c:\\dev\\gittests\\winforms-actions-test\\dxapplication\\dxapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\dxapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{E8B462FA-E5CB-4092-9A3B-E1A82A21D229}|DXApplication\\DXApplication.csproj|solutionrelative:dxapplication\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -63,6 +71,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "TestProjectNuinit",
+              "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\TestProjectNuinit\\TestProjectNuinit.csproj",
+              "RelativeDocumentMoniker": "TestProjectNuinit\\TestProjectNuinit.csproj",
+              "ToolTip": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\TestProjectNuinit\\TestProjectNuinit.csproj",
+              "RelativeToolTip": "TestProjectNuinit\\TestProjectNuinit.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-31T22:28:59.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\TestProjectNuinit\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "TestProjectNuinit\\UnitTest1.cs",
+              "ToolTip": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\TestProjectNuinit\\UnitTest1.cs",
+              "RelativeToolTip": "TestProjectNuinit\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-31T22:25:28.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\DXApplication\\Program.cs",
               "RelativeDocumentMoniker": "DXApplication\\Program.cs",
@@ -75,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "App.config",
               "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\DXApplication\\App.config",
               "RelativeDocumentMoniker": "DXApplication\\App.config",
@@ -83,24 +117,22 @@
               "RelativeToolTip": "DXApplication\\App.config",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-03-31T21:44:49.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T21:44:49.437Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\DXApplication\\Form1.cs",
               "RelativeDocumentMoniker": "DXApplication\\Form1.cs",
               "ToolTip": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\DXApplication\\Form1.cs [Design]",
               "RelativeToolTip": "DXApplication\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T21:43:33.421Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-03-31T21:43:33.421Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Dev\\GitTests\\winforms-actions-test\\DXApplication\\DXApplication\\Form1.cs",
               "RelativeDocumentMoniker": "DXApplication\\Form1.cs",
@@ -108,8 +140,7 @@
               "RelativeToolTip": "DXApplication\\Form1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T21:43:27.668Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T21:43:27.668Z"
             }
           ]
         }
