@@ -79,4 +79,4 @@ jobs:
       
       - name: Test Category 2
         working-directory: ./SampleTestProject
-        run: dotnet test --filter ./SampleTestProject/SampleTestProject.csproj TestCategory=SampleTest2 --no-build
+        run: dotnet test --filter "TestCategory=SampleTest2" --no-build
