@@ -63,7 +63,12 @@ jobs:
       - name: Test Category 1
         working-directory: ./SampleTestProject
         run: dotnet test --filter TestCategory=SampleTest1 -- NUnit.TestOutputXml= ./SampleTestProject
-
+      - uses: actions/upload-artifact@v4 
+        if: success() || failure()        
+        with:
+          name: test-results
+          path: dotnet-nunit.xml
+        
   test2:
     needs: build
     name: Test Suite 2
