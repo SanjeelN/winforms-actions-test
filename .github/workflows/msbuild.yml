@@ -78,5 +78,5 @@ jobs:
           path: ./SampleConsoleApp/bin/
       
       - name: Test Category 2
-        working-directory: ./SampleTestProject
+        working-directory: ./SampleConsoleApp
         run: dotnet test --filter "TestCategory=SampleTest2" --no-build
