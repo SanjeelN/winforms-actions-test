@@ -50,4 +50,4 @@ jobs:
       run: nuget restore SampleConsoleApp.sln
     
     - name: Run UnitTests
-      run: dotnet test ./TestProject/TestProject.csproj --no-build --verbosity normal --no-build --verbosity normal
+      run: dotnet test ./TestProject/TestProject.csproj
