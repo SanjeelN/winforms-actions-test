@@ -66,7 +66,7 @@ jobs:
       
       - name: Test Category 1
         working-directory: ./SampleTestProject
-        run: dotnet test --filter TestCategory=SampleTest1 --no-build
+        run: dotnet test --filter TestCategory=SampleTest1 
 
   test2:
     needs: build
