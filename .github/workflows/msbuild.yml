@@ -46,10 +46,6 @@ jobs:
         with:
           name: build-artifacts
           path: ./SampleConsoleApp/bin/
-
-      - name: Test with the dotnet CLI
-        working-directory: ./SampleConsoleApp
-        run: dotnet test --no-build
         
   test1:
     needs: build
@@ -82,5 +78,5 @@ jobs:
           path: ./SampleConsoleApp/bin/
       
       - name: Test Category 2
-        working-directory: ./
+        working-directory: ./SampleTestProject
         run: dotnet test --filter TestCategory=SampleTest2 
