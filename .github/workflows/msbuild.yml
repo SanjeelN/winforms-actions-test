@@ -24,23 +24,46 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        working-directory: ./SampleConsoleApp
+        run: dotnet restore
+        
+      - name: Build
+        working-directory: ./SampleConsoleApp
+        run: dotnet build --no-restore
+        
+      - name: Test with the dotnet CLI
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --no-build
+
   build:
+    name: Build Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: ['8.0.x' ]
-
+        dotnet-version: ['8.0.x']
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      working-directory: ./SampleConsoleApp
-      run: dotnet restore
-    
-    - name: Build
-      working-directory: ./SampleConsoleApp
-      run: dotnet build --no-restore
-    
-    - name: Test with the dotnet CLI
-      working-directory: ./SampleConsoleApp
-      run: dotnet test --no-build
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      
+      - name: Install dependencies
+        working-directory: ./SampleConsoleApp
+        run: dotnet restore
+        
+      - name: Build
+        working-directory: ./SampleConsoleApp
+        run: dotnet build --no-restore
+        
+      - name: Test with the dotnet CLI
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --no-build
