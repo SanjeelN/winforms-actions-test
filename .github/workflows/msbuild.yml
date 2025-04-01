@@ -66,7 +66,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
             name: coverage
-            path: ${{winforms-actions-test}}/Cobertura.xml
+            path: ${{ github.workspace }}/Cobertura.xml
             retention-days: 5
         
   test2:
