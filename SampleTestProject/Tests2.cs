@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SampleTestProject
 {
+    [Category("SampleTest2")]
     class Tests2
     {
         [SetUp]

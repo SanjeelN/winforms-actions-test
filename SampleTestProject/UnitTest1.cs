@@ -1,5 +1,6 @@
 ﻿namespace SampleTestProject
 {
+    [Category("SampleTest1")]
     public class Tests
     {
         [SetUp]
