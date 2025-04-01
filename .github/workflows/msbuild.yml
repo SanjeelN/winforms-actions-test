@@ -83,4 +83,4 @@ jobs:
       
       - name: Test Category 2
         working-directory: ./SampleConsoleApp
-        run: dotnet test --no-build
+        run: dotnet test
