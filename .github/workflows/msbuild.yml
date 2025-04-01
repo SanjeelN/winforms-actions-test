@@ -62,7 +62,7 @@ jobs:
       
       - name: Test Category 1
         working-directory: ./SampleTestProject
-        run: dotnet test --filter TestCategory=SampleTest1 
+        run: dotnet test --filter TestCategory=SampleTest1 -- NUnit.TestOutputXml= ./SampleTestProject
 
   test2:
     needs: build
