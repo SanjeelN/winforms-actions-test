@@ -40,7 +40,7 @@ jobs:
         
       - name: Test with the dotnet CLI
         working-directory: ./SampleConsoleApp
-        run: dotnet test --no-build
+        run: dotnet test --filter TestCategory=SampleTest1 --no-build
 
   build:
     name: Build Tests
@@ -66,4 +66,4 @@ jobs:
         
       - name: Test with the dotnet CLI
         working-directory: ./SampleConsoleApp
-        run: dotnet test --no-build
+        run: dotnet test --filter TestCategory=SampleTest2 --no-build
