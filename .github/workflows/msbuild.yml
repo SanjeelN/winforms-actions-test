@@ -49,6 +49,7 @@ jobs:
         
   test1:
     needs: build
+    permissions: write-all
     name: Test Suite 1
     runs-on: ubuntu-latest
     steps:
