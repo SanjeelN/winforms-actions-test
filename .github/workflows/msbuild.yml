@@ -22,39 +22,18 @@ env:
 
 permissions:
   contents: read
-
+  
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install dependencies
-        working-directory: ./SampleConsoleApp
-        run: dotnet restore
-        
-      - name: Build
-        working-directory: ./SampleConsoleApp
-        run: dotnet build --no-restore
-        
-      - name: Test with the dotnet CLI
-        working-directory: ./SampleConsoleApp
-        run: dotnet test --filter TestCategory=SampleTest1 --no-build
-
   build:
-    name: Build Tests
+    name: Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ['8.0.x']
     steps:
       - uses: actions/checkout@v4
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '8.0.x'
       
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
@@ -63,7 +42,43 @@ jobs:
       - name: Build
         working-directory: ./SampleConsoleApp
         run: dotnet build --no-restore
-        
-      - name: Test with the dotnet CLI
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+
+  test1:
+    needs: build
+    name: Test Suite 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+      
+      - name: Test Category 1
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --filter TestCategory=SampleTest1 --no-build
+
+  test2:
+    needs: build
+    name: Test Suite 2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+      
+      - name: Test Category 2
         working-directory: ./SampleConsoleApp
         run: dotnet test --filter TestCategory=SampleTest2 --no-build
