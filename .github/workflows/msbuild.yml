@@ -22,26 +22,61 @@ env:
 
 permissions:
   contents: read
-
+  
 jobs:
   build:
-    runs-on: windows-latest
-
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['8.0.x']
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        working-directory: ./SampleConsoleApp
+        run: dotnet restore
+        
+      - name: Build
+        working-directory: ./SampleConsoleApp
+        run: dotnet build --no-restore
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
 
-    - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+  test1:
+    needs: build
+    name: Test Suite 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+      
+      - name: Test Category 1
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --filter TestCategory=SampleTest1 --no-build
 
-    - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
-    
-    - name: Run UnitTests
-      run: dotnet test ./TestProject/TestProject.csproj --no-build --verbosity normal --no-build --verbosity normal
+  test2:
+    needs: build
+    name: Test Suite 2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+      
+      - name: Test Category 2
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --filter TestCategory=SampleTest2 --no-build
