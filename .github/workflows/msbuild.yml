@@ -66,27 +66,21 @@ jobs:
 
       - name: Run Tests
         working-directory: ./SampleTestProject
-        run: |
-          mkdir -p TestResults/${{ matrix.test-suite }}
-          dotnet test --filter TestCategory=${{ matrix.test-suite }} \
-            --configuration Release \
-            --verbosity normal \
-            --logger "trx;LogFileName=TestResults/${{ matrix.test-suite }}/test-results.trx" \
-            --collect:"XPlat Code Coverage"
+        run: dotnet test --filter TestCategory=${{ matrix.test-suite }} --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
 
       - uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.test-suite }}
-          path: ${{ github.workspace }}/TestResults/${{ matrix.test-suite }}/*/coverage.cobertura.xml
+          path: ${{ github.workspace }}/Cobertura.xml
           retention-days: 5
 
       - uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.test-suite }}
-          path: ${{ github.workspace }}/TestResults/${{ matrix.test-suite }}
+          path: ${{ github.workspace }}/TestResults/
           retention-days: 5
 
       - uses: EnricoMi/publish-unit-test-result-action@v2.19.0
         if: always()
         with:
-          trx_files: "${{ github.workspace }}/TestResults/${{ matrix.test-suite }}/*.trx"
+          trx_files: "${{ github.workspace }}/**/*.trx"
