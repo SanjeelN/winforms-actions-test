@@ -61,7 +61,7 @@ jobs:
           path: ./SampleConsoleApp/bin/
       
       - name: Test Category 1
-        working-directory: ./SampleConsoleApp
+        working-directory: ./SampleTestProject
         run: dotnet test --filter TestCategory=SampleTest1 --no-build
 
   test2:
@@ -78,5 +78,5 @@ jobs:
           path: ./SampleConsoleApp/bin/
       
       - name: Test Category 2
-        working-directory: ./SampleConsoleApp
+        working-directory: ./SampleTestProject
         run: dotnet test --filter TestCategory=SampleTest2 --no-build
