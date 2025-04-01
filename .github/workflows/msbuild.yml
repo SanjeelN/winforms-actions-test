@@ -35,7 +35,7 @@ jobs:
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore SampleConsoleApp.sln
+      run: nuget restore ./SampleConsoleApp/SampleConsoleApp.sln
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
