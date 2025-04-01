@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\TestProject.csproj": {}
+    "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\SampleTestProject.csproj": {}
   },
   "projects": {
-    "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\TestProject.csproj": {
+    "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\SampleTestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\TestProject.csproj",
-        "projectName": "TestProject",
-        "projectPath": "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\TestProject.csproj",
+        "projectUniqueName": "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\SampleTestProject.csproj",
+        "projectName": "SampleTestProject",
+        "projectPath": "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\SampleTestProject.csproj",
         "packagesPath": "C:\\Users\\Sanjeel.Nath\\.nuget\\packages\\",
-        "outputPath": "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\obj\\",
+        "outputPath": "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 24.2\\Components\\Offline Packages",

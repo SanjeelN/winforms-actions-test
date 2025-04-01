@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vcv3NFaMxog=",
+  "dgSpecHash": "HcOL0dphHkw=",
   "success": true,
-  "projectFilePath": "C:\\Dev\\GitTests\\winforms-actions-test\\TestProject\\TestProject.csproj",
+  "projectFilePath": "C:\\Dev\\GitTests\\winforms-actions-test\\SampleTestProject\\SampleTestProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sanjeel.Nath\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\Sanjeel.Nath\\.nuget\\packages\\microsoft.codecoverage\\17.12.0\\microsoft.codecoverage.17.12.0.nupkg.sha512",
