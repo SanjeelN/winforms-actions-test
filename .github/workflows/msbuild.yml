@@ -44,10 +44,3 @@ jobs:
     - name: Test with the dotnet CLI
       working-directory: ./SampleConsoleApp
       run: dotnet test --no-build
-
-    - name: Restore NuGet packages
-      working-directory: ./SampleConsoleApp
-      run: nuget restore SampleConsoleApp.sln
-    
-    - name: Run UnitTests
-      run: dotnet test ./SampleTestProject/SampleTestProject.csproj
