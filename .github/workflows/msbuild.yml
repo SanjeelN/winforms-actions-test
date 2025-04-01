@@ -46,8 +46,8 @@ jobs:
       run: dotnet test --no-build
 
     - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+      working-directory: ./SampleConsoleApp
+      run: nuget restore SampleConsoleApp.sln
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
