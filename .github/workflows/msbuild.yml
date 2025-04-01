@@ -73,13 +73,7 @@ jobs:
           name: coverage-${{ matrix.test-suite }}
           path: ${{ github.workspace }}/Cobertura.xml
           retention-days: 5
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: test-results-${{ matrix.test-suite }}
-          path: ${{ github.workspace }}/TestResults/
-          retention-days: 5
-
+          
       - uses: EnricoMi/publish-unit-test-result-action@v2.19.0
         if: always()
         with:
