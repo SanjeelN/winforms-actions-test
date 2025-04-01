@@ -47,6 +47,10 @@ jobs:
           name: build-artifacts
           path: ./SampleConsoleApp/bin/
 
+      - name: Test with the dotnet CLI
+        working-directory: ./SampleConsoleApp
+        run: dotnet test --no-build
+        
   test1:
     needs: build
     name: Test Suite 1
