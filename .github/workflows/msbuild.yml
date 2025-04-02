@@ -85,9 +85,14 @@ jobs:
           sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
           cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
 
-      - name: dotnet merge report
-        run: 
-          dotnet coverage merge *.xml --recursive --output Cobertura.xml --output-format xml 
+      - name: Install dotnet-coverage tool
+        run: dotnet tool install -g dotnet-coverage
+        
+      - name: Run tests and merge coverage files
+        run: |
+            dotnet test --collect:"XPlat Code Coverage" --results-directory "coverage-results"
+            dotnet coverage merge --reports "coverage-results/**/Cobertura.xml" -f cobertura -o coverage-results/coverage.xml
+
   
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
