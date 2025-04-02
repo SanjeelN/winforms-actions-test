@@ -75,8 +75,8 @@ jobs:
 
       - name: Run Tests
         working-directory: ./SampleTestProject
-        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' SampleTestProject -- RunConfiguration.CollectSourceInformation=true
-
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
+      
       - name: 📝 Code Coverage report
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
