@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Enable problem matchers
-        run: echo "::add-matcher::.github/workflows/matchers/dotnet.json"   
+        run: echo "::add-matcher::/workflows/matchers/dotnet.json"   
       
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
