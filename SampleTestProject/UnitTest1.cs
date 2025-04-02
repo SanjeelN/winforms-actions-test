@@ -23,7 +23,7 @@ namespace SampleTestProject
         }
         
         [Test]
-        public void PassingTest2()
+        public void CalculatorTest()
         {
             var calculator = new Calculator();
             var result = calculator.Add(5, 10);
