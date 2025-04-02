@@ -12,8 +12,8 @@ on:
     branches: [ "main" ]
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
 
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
@@ -76,6 +76,10 @@ jobs:
         working-directory: ./SampleTestProject
         run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
         
+  testPost:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.5
         with:
@@ -127,3 +131,4 @@ jobs:
         if: always()
         with:
           trx_files: "${{ github.workspace }}/**/*.trx"
+
