@@ -85,6 +85,10 @@ jobs:
           sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
           cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
 
+      - name: dotnet merge report
+        run: 
+          dotnet coverage merge *.xml --recursive --output Cobertura.xml --output-format xml 
+  
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
         if: always()
