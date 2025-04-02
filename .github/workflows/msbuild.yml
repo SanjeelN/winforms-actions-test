@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Tests
         working-directory: ./SampleTestProject
-        run: dotnet test ./SampleTestProject/SampleTestProject.csproj --collect:"XPlat Code Coverage" --results-directory "coverage-results" --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
       
       - name: Code Coverage report
         run: |
