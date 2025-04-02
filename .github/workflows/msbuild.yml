@@ -39,7 +39,7 @@ jobs:
         run: ls -la .github
         
       - name: Enable problem matchers
-        run: echo "::add-matcher::matchers\dotnet.json"     
+        run: echo "::add-matcher::matchers/dotnet.json"     
 
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
