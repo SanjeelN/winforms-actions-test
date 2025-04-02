@@ -92,7 +92,14 @@ jobs:
         run: |
             dotnet test ./SampleTestProject/SampleTestProject.csproj --collect:"XPlat Code Coverage" --results-directory "coverage-results"
             dotnet coverage merge --reports "${{github.workspace}}/Cobertura.xml" -f cobertura -o coverage-results/coverage.xml
+     
+      - name: Generate Coverage Report
+        run: |
+              dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
+              reportgenerator -reports:coverage-results/coverage.xml -targetdir:coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
 
+      - name: Publish Coverage Summary
+        run: cat coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
   
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
