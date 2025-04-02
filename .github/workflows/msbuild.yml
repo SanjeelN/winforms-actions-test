@@ -90,7 +90,7 @@ jobs:
         
       - name: Run tests and merge coverage files
         run: |
-            dotnet test --collect:"XPlat Code Coverage" --results-directory "coverage-results"
+            dotnet test ./SampleTestProject/SampleTestProject.csproj --collect:"XPlat Code Coverage" --results-directory "coverage-results"
             dotnet coverage merge --reports "${{github.workspace}}/Cobertura.xml" -f cobertura -o coverage-results/coverage.xml
 
   
