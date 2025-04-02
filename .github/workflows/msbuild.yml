@@ -68,13 +68,15 @@ jobs:
 
       - name: Run Tests
         working-directory: ./SampleTestProject
-        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" 
-          --results-directory "${{ github.workspace }}/coverage"
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+
+      - name: Debug - List Test Results
+        run: ls -R ${{ github.workspace }}/SampleTestProject/TestResults
         
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.5
         with:
-          reports: "**/*.cobertura.xml"
+          reports: "**/cobertura.xml"
           targetdir: "${{ github.workspace }}" 
           reporttypes: "Cobertura" # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
           verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
@@ -83,8 +85,9 @@ jobs:
           customSettings: "" # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
-      - name: Copy files to there
-        run: cp ${{ github.workspace }}/coverage/**/coverage.cobertura.xml ${{ github.workspace }}/coverage/coverage.cobertura.xml
+
+      - name: Debug - Check Regenerated Cobertura File
+        run: cat ${{ github.workspace }}/Cobertura.xml
 
       - name: Upload Combined Coverage XML
         uses: actions/upload-artifact@v4
@@ -113,7 +116,7 @@ jobs:
           hide_complexity: false
           indicators: true
           output: both
-          thresholds: "10 30"
+          thresholds: "50 80"
 
       # - name: Add Coverage PR Comment
       #   uses: marocchino/sticky-pull-request-comment@v2
