@@ -35,9 +35,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug - List Matchers Directory
+        run: ls -la .github/matchers
+
       - name: Enable problem matchers
-        run: echo "::add-matcher::./workflows/matchers/dotnet.json"   
-      
+        run: echo "::add-matcher::.github/matchers/dotnet.json"      
+        
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
         run: dotnet restore
