@@ -85,16 +85,6 @@ jobs:
           sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
           cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
 
-      - name: Merge converage report
-        id: coverage
-        uses: selfagency/merge-coverage@v1.1.2
-        with:
-          source: ${{ github.workspace }}
-          coverage-reports: ${{ github.workspace }}/report
-          output-folder: ${ github.workspace }}/coverage-reports
-          formats: html
-          artifacts: true    
-
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
         if: always()
