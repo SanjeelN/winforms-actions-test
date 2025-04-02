@@ -56,58 +56,58 @@ jobs:
           path: ./SampleConsoleApp/bin/
  
 
-        test:
-            needs: build
-            permissions: write-all
-            strategy:
-              matrix:
-                test-suite: ['SampleTest1', 'SampleTest2']
-            name: Test Suite ${{ matrix.test-suite }}
-            runs-on: ubuntu-latest
-            steps:
-              - uses: actions/checkout@v4
-        
-              - name: Download build artifacts
-                uses: actions/download-artifact@v4
-                with:
-                  name: build-artifacts
-                  path: ./SampleConsoleApp/bin/
-        
-              - name: Run Tests
-                working-directory: ./SampleTestProject
-                run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";CoverletOutput=${{github.workspace}}/coverage/${{ matrix.test-suite }}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
-        
-              - name: Upload Coverage Report
-                uses: actions/upload-artifact@v4
-                with:
-                  name: coverage-${{ matrix.test-suite }}
-                  path: ${{ github.workspace }}/coverage/${{ matrix.test-suite }}
-        
-          combine-coverage:
-            needs: test
-            runs-on: ubuntu-latest
-            steps:
-              - uses: actions/checkout@v4
-        
-              - name: Download Coverage Reports
-                uses: actions/download-artifact@v4
-                with:
-                  name: coverage-${{ matrix.test-suite }}
-                  path: ${{ github.workspace }}/coverage
-        
-              - name: Combine Coverage Reports
-                run: |
-                  dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
-                  reportgenerator -reports:${{github.workspace}}/coverage/**/*.cobertura.xml -targetdir:${{github.workspace}}/coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
-        
-              - name: Upload Combined Coverage Report
-                uses: actions/upload-artifact@v4
-                with:
-                  name: combined-coverage-report
-                  path: ${{ github.workspace }}/coverage-report
-        
-              - name: Publish Coverage Summary
-                run: cat ${{ github.workspace }}/coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+  test:
+    needs: build
+    permissions: write-all
+    strategy:
+      matrix:
+        test-suite: ['SampleTest1', 'SampleTest2']
+    name: Test Suite ${{ matrix.test-suite }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./SampleConsoleApp/bin/
+
+      - name: Run Tests
+        working-directory: ./SampleTestProject
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";CoverletOutput=${{github.workspace}}/coverage/${{ matrix.test-suite }}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.test-suite }}
+          path: ${{ github.workspace }}/coverage/${{ matrix.test-suite }}
+
+  combine-coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Coverage Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-${{ matrix.test-suite }}
+          path: ${{ github.workspace }}/coverage
+
+      - name: Combine Coverage Reports
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
+          reportgenerator -reports:${{github.workspace}}/coverage/**/*.cobertura.xml -targetdir:${{github.workspace}}/coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
+
+      - name: Upload Combined Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-coverage-report
+          path: ${{ github.workspace }}/coverage-report
+
+      - name: Publish Coverage Summary
+        run: cat ${{ github.workspace }}/coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
       # - name: Install dotnet-coverage tool
       #   run: dotnet tool install -g dotnet-coverage
         
