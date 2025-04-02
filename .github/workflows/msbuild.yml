@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Tests
         working-directory: ./SampleTestProject
-        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";CoverletOutput=${{github.workspace}}/coverage/${{ matrix.test-suite }}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";CoverletOutput=${{ github.workspace }}/coverage/${{ matrix.test-suite }}/coverage' SampleTestProject.csproj -- RunConfiguration.CollectSourceInformation=true
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
@@ -89,16 +89,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Coverage Reports
+      - name: Download Coverage Reports for SampleTest1
         uses: actions/download-artifact@v4
         with:
-          name: coverage-${{ matrix.test-suite }}
-          path: ${{ github.workspace }}/coverage
+          name: coverage-SampleTest1
+          path: ${{ github.workspace }}/coverage/SampleTest1
+
+      - name: Download Coverage Reports for SampleTest2
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-SampleTest2
+          path: ${{ github.workspace }}/coverage/SampleTest2
 
       - name: Combine Coverage Reports
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
-          reportgenerator -reports:${{github.workspace}}/coverage/**/*.cobertura.xml -targetdir:${{github.workspace}}/coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
+          reportgenerator -reports:${{ github.workspace }}/coverage/**/*.cobertura.xml -targetdir:${{ github.workspace }}/coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
 
       - name: Upload Combined Coverage Report
         uses: actions/upload-artifact@v4
