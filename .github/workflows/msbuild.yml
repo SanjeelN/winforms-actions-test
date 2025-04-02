@@ -34,6 +34,9 @@ jobs:
         dotnet-version: ['8.0.x']
     steps:
       - uses: actions/checkout@v4
+
+      - name: Enable problem matchers
+        run: echo "::add-matcher::.github/workflows/matchers/dotnet.json"   
       
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
@@ -48,10 +51,8 @@ jobs:
         with:
           name: build-artifacts
           path: ./SampleConsoleApp/bin/
+ 
 
-      - name: Enable problem matchers
-        run: echo "::add-matcher::.github/matchers/dotnet.json"
-        
   test:
     needs: build
     permissions: write-all
