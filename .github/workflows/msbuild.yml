@@ -84,21 +84,27 @@ jobs:
           sed -i 's/# Summary/## 📝 Code Coverage/g' ${{github.workspace}}/report/SummaryGithub.md
           sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
           cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
-
-      - name: Install dotnet-coverage tool
-        run: dotnet tool install -g dotnet-coverage
+          
+          
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+            name: coverage-report
+            path: ${{ github.workspace }}/report
+      # - name: Install dotnet-coverage tool
+      #   run: dotnet tool install -g dotnet-coverage
         
-      - name: Run tests and merge coverage files
-        run: |
-            dotnet test ./SampleTestProject/SampleTestProject.csproj --collect:"XPlat Code Coverage" --results-directory "coverage-results"
-            dotnet coverage merge --reports "${{github.workspace}}/Cobertura.xml" -f cobertura -o coverage-results/coverage.xml
+      # - name: Run tests and merge coverage files
+      #   run: |
+      #       dotnet test ./SampleTestProject/SampleTestProject.csproj --collect:"XPlat Code Coverage" --results-directory "coverage-results"
+      #       dotnet coverage merge --reports "${{github.workspace}}/Cobertura.xml" -f cobertura -o coverage-results/coverage.xml
      
-      - name: Generate Coverage Report
-        run: |
-            reportgenerator -reports:coverage-results/coverage.xml -targetdir:coverage-report -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
+      # - name: Generate Coverage Report
+      #   run: |
+      #       reportgenerator -reports:coverage-results/coverage.xml -targetdir:coverage-report -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
       
-      - name: Publish Coverage Summary
-        run: cat coverage-results/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+      # - name: Publish Coverage Summary
+      #   run: cat coverage-results/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
   
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
