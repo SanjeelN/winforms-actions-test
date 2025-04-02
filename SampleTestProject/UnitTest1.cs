@@ -1,4 +1,6 @@
-﻿namespace SampleTestProject
+﻿using SampleConsoleApp;
+
+namespace SampleTestProject
 {
     [Category("SampleTest1")]
     public class Tests
@@ -19,5 +21,15 @@
         {
             Assert.Pass();
         }
+        
+        [Test]
+        public void PassingTest2()
+        {
+            var calculator = new Calculator();
+            var result = calculator.Add(5, 10);
+            Assert.That(result == 15, "This will pass");
+        }
+        
+        
     }
 }
