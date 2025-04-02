@@ -98,7 +98,7 @@ jobs:
             reportgenerator -reports:coverage-results/coverage.xml -targetdir:coverage-report -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
       
       - name: Publish Coverage Summary
-        run: cat coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+        run: cat coverage-results/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
   
       - name: Publish Test Results     
         uses: EnricoMi/publish-unit-test-result-action@v2.19.0
