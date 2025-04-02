@@ -87,7 +87,6 @@ jobs:
 
       - name: dotnet merge report
         run: 
-          dotnet tool install --global dotnet-coverage
           dotnet coverage merge *.xml --recursive --output Cobertura.xml --output-format xml 
   
       - name: Publish Test Results     
