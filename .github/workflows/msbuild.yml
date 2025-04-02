@@ -95,7 +95,6 @@ jobs:
      
       - name: Generate Coverage Report
         run: |
-              dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
               reportgenerator -reports:coverage-results/coverage.xml -targetdir:coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
 
       - name: Publish Coverage Summary
