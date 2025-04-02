@@ -70,9 +70,6 @@ jobs:
         working-directory: ./SampleTestProject
         run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" 
           --results-directory "${{ github.workspace }}/coverage"
-
-      - name: Debug - List Test Results
-        run: ls -R ${{ github.workspace }}/SampleTestProject/TestResults
         
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.5
@@ -85,10 +82,6 @@ jobs:
           tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
           customSettings: "" # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
-
-
-      - name: Debug - Check Regenerated Cobertura File
-        run: cat ${{ github.workspace }}/Cobertura.xml
 
       - name: Copy files to there
         run: cp ${{ github.workspace }}/coverage/**/coverage.cobertura.xml ${{ github.workspace }}/coverage/coverage.cobertura.xml
