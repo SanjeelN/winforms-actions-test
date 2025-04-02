@@ -27,6 +27,7 @@ jobs:
   build:
     name: Build
     permissions: write-all
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -76,10 +77,6 @@ jobs:
         working-directory: ./SampleTestProject
         run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
         
-  testPost:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.4.5
         with:
@@ -131,4 +128,3 @@ jobs:
         if: always()
         with:
           trx_files: "${{ github.workspace }}/**/*.trx"
-
