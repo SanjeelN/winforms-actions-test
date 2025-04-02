@@ -36,10 +36,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Debug - List Matchers Directory
-        run: ls -la .github/matchers
-
-      - name: Enable problem matchers
-        run: echo "::add-matcher:: ${{github.workspace}}/matchers/dotnet.json"      
+        run: ls -la .github
+    
 
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
