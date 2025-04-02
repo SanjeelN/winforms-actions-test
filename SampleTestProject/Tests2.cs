@@ -19,5 +19,25 @@ namespace SampleTestProject
         {
             Assert.Pass();
         }
+
+
+        [Test]
+        public void PassingMathTest()
+        {
+
+            Assert.That(5 + 10 == 15, "This will pass");
+        }
+
+        [Test]
+        public void FailingTest()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void NotAFailingTest()
+        {
+            Assert.That(5 + 10 == 15, "This will pass");
+        }
     }
 }

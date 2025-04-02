@@ -7,7 +7,7 @@ name: MSBuild
 
 on:
   push:
-    branches: [ "main" ]
+    branches: '**'
   pull_request:
     branches: [ "main" ]
 
@@ -26,13 +26,21 @@ permissions:
 jobs:
   build:
     name: Build
+    permissions: write-all
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['8.0.x']
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Debug - List Matchers Directory
+        run: ls -la .github
+        
+      - name: Enable problem matchers
+        run: echo "::add-matcher::.github/matchers/dotnet.json"     
+
       - name: Install dependencies
         working-directory: ./SampleConsoleApp
         run: dotnet restore
@@ -46,37 +54,39 @@ jobs:
         with:
           name: build-artifacts
           path: ./SampleConsoleApp/bin/
-        
-  test1:
-    needs: build
-    name: Test Suite 1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: ./SampleConsoleApp/bin/
-      
-      - name: Test Category 1
-        working-directory: ./SampleTestProject
-        run: dotnet test --filter TestCategory=SampleTest1 
+ 
 
-  test2:
+  test:
     needs: build
-    name: Test Suite 2
+    permissions: write-all
+    strategy:
+      matrix:
+        test-suite: ['SampleTest1', 'SampleTest2']
+    name: Test Suite ${{ matrix.test-suite }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
           path: ./SampleConsoleApp/bin/
-      
-      - name: Test Category 2
+
+      - name: Run Tests
         working-directory: ./SampleTestProject
-        run: dotnet test --filter TestCategory=SampleTest2 
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' tests/Sonos.Base.Tests -- RunConfiguration.CollectSourceInformation=true
+
+      - name: 📝 Code Coverage report
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
+          reportgenerator -reports:${{github.workspace}}/coverage.cobertura.xml -targetdir:${{github.workspace}}/report -reporttypes:MarkdownSummaryGithub "-filefilters:-*.g.cs" -verbosity:Warning
+          sed -i 's/# Summary/## 📝 Code Coverage/g' ${{github.workspace}}/report/SummaryGithub.md
+          sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
+          cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
+
+      - name: Publish Test Results     
+        uses: EnricoMi/publish-unit-test-result-action@v2.19.0
+        if: always()
+        with:
+          trx_files: "${{ github.workspace }}/**/*.trx"

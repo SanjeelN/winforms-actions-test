@@ -1,4 +1,6 @@
 ﻿SampleConsoleApp/.vs
-SampleConsoleApp/.idea/.idea.SampleConsoleApp/.idea
-SampleConsoleApp/obj/Debug/net8.0
+SampleConsoleApp/bin
+SampleConsoleApp/obj
+SampleTestProject/bin
 SampleTestProject/obj/Debug/net8.0
+SampleTestProject/obj

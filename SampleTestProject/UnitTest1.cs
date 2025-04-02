@@ -13,5 +13,11 @@
         {
             Assert.Pass();
         }
+
+        [Test]
+        public void PassingTest2()
+        {
+            Assert.Pass();
+        }
     }
 }
