@@ -26,6 +26,7 @@ permissions:
 jobs:
   build:
     name: Build
+    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       matrix:
