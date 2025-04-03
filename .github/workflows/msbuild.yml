@@ -104,14 +104,16 @@ jobs:
           trx_files: "${{ github.workspace }}/**/*.trx"
 
   test:
-    name: "Run Tests for ${{ matrix.test_project }}"
+    name: "Run Tests for ${{ matrix.test_project.name }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         test_project:
-          - ./TestProject1/TestProject1.csproj
-          - ./TestProject2/TestProject2.csproj
+          - name: TestProject1
+            path: ./TestProject1/TestProject1.csproj
+          - name: TestProject2
+            path: ./TestProject2/TestProject2.csproj
 
     steps:
       - name: Check out the code
@@ -127,7 +129,7 @@ jobs:
 
       - name: Run Tests with Code Coverage
         run: |
-          dotnet test ${{ matrix.test_project }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/
+          dotnet test ${{ matrix.test_project.path }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/
 
       - name: Debug - List Coverage Files
         run: ls -R coverage-results/
@@ -135,7 +137,7 @@ jobs:
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ matrix.test_project }}
+          name: coverage-${{ matrix.test_project.path }}
           path: coverage-results/
 
   combine-coverage:
