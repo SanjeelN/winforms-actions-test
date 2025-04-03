@@ -148,22 +148,15 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
 
-      - name: Download Coverage Report for TestProject1
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-TestProject1
-          path: coverage-reports/TestProject1
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
 
-      - name: Download Coverage Report for TestProject2
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-TestProject2
-          path: coverage-reports/TestProject2
+      - name: Debug - List Coverage Files
+        run: ls -R coverage-reports/
 
       - name: Combine Coverage Reports
         run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
-          reportgenerator -reports:coverage-reports/**/*.xml -targetdir:coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
+          reportgenerator -reports:coverage-reports/**/*.xml -targetdir:coverage-report -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
 
       - name: Upload Combined Coverage Report
         uses: actions/upload-artifact@v4
