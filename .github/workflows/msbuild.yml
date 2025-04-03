@@ -137,7 +137,7 @@ jobs:
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ matrix.test_project.path }}
+          name: coverage-${{ matrix.test_project.name }}
           path: coverage-results/
 
   combine-coverage:
@@ -151,13 +151,13 @@ jobs:
       - name: Download Coverage Report for TestProject1
         uses: actions/download-artifact@v4
         with:
-          name: coverage-./TestProject1/TestProject1.csproj
+          name: coverage-TestProject1
           path: coverage-reports/TestProject1
 
       - name: Download Coverage Report for TestProject2
         uses: actions/download-artifact@v4
         with:
-          name: coverage-./TestProject2/TestProject2.csproj
+          name: coverage-TestProject2
           path: coverage-reports/TestProject2
 
       - name: Combine Coverage Reports
