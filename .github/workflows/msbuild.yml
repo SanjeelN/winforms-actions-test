@@ -140,14 +140,9 @@ jobs:
           name: coverage-${{ matrix.test_project.name }}
           path: coverage-results/
 
-  combine-coverage:
-    name: Combine Coverage Reports
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
       - name: Check out the code
         uses: actions/checkout@v4
-
+  
       - name: Download Coverage Report for TestProject1
         uses: actions/download-artifact@v4
         with:
