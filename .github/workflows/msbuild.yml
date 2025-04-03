@@ -106,6 +106,7 @@ jobs:
   test:
     name: "Run Tests for ${{ matrix.test_project.name }}"
     runs-on: ubuntu-latest
+    permissions: write-all
     strategy:
       fail-fast: false
       matrix:
@@ -144,6 +145,7 @@ jobs:
   combine-coverage:
     name: Combine Coverage Reports
     needs: test
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
