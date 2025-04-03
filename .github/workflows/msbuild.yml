@@ -139,9 +139,7 @@ jobs:
         with:
           name: coverage-${{ matrix.test_project.name }}
           path: coverage-results/
-      
-      - name: Debug - List Coverage Files
-        run: ls -R coverage-reports/
+          
 
   combine-coverage:
     name: Combine Coverage Reports
@@ -215,16 +213,16 @@ jobs:
       # - name: Output Coverage Results to Summary
       #   run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
       
-      # - name: Upload Test Result Files
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: test-results
-      #     path: ${{ github.workspace }}/**/TestResults/**/*
-      #     retention-days: 5
+      - name: Upload Test Result Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ${{ github.workspace }}/**/TestResults/**/*
+          retention-days: 5
           
-      # - name: Publish Test Results
-      #   uses: EnricoMi/publish-unit-test-result-action@v2.18.0
-      #   if: always()
-      #   with:
-      #     # NOTE: using trx_files instead of files due to https://github.com/EnricoMi/publish-unit-test-result-action/issues/424
-      #     trx_files: "${{ github.workspace }}/**/*.trx"
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.18.0
+        if: always()
+        with:
+          # NOTE: using trx_files instead of files due to https://github.com/EnricoMi/publish-unit-test-result-action/issues/424
+          trx_files: "${{ github.workspace }}/**/*.trx"
