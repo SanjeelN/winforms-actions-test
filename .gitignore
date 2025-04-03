@@ -4,3 +4,5 @@ SampleConsoleApp/obj
 SampleTestProject/bin
 SampleTestProject/obj/Debug/net8.0
 SampleTestProject/obj
+obj
+.vs
