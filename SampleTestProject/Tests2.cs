@@ -33,5 +33,12 @@ namespace SampleTestProject
         {
             Assert.That(5 + 10 == 15, "This will pass");
         }
+
+        
+        [Test]
+        public void NotAFailingTest22()
+        {
+            Assert.That(5 + 10 == 15, "This will pass");
+        }
     }
 }
