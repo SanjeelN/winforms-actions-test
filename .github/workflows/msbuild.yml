@@ -74,19 +74,24 @@ jobs:
           path: ./SampleConsoleApp/bin/
 
       - name: Run tests
-        working-directory: ./SampleTestProject # Adjust this path to the correct directory
-        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" SampleTestProject.csproj
+        working-directory: ./SampleTestProject # Update this to the correct directory
+        run: |
+          dotnet test --filter "TestCategory=${{ matrix.test-suite }}" \
+            --configuration Release \
+            --verbosity normal \
+            --logger trx \
+            --collect:"XPlat Code Coverage" \
+            SampleTestProject.csproj
 
-      - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
+      - name: Combine Coverage Reports
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
         with:
-          reports: "**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
-          targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
-          reporttypes: "Cobertura" # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
-          verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
-          title: "Code Coverage" # Optional title.
-          tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
-          toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
+          reports: "./SampleTestProject/**/coverage.cobertura.xml" # Adjust this path to match where coverage reports are generated
+          targetdir: "${{ github.workspace }}/coverage-report"
+          reporttypes: "Cobertura"
+          verbosity: "Info"
+          title: "Code Coverage"
+          tag: "${{ github.run_number }}_${{ github.run_id }}"
 
       - name: Upload Combined Coverage XML
         uses: actions/upload-artifact@v4
