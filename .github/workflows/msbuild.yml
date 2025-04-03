@@ -166,11 +166,17 @@ jobs:
       - name: Combine Coverage Reports
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
-          reports: "coverage-reports/**/*.xml" # Adjusted pattern
+          reports: "coverage-reports/**/*.cobertura.xml"
           targetdir: "${{ github.workspace }}/coverage-report"
           reporttypes: "Cobertura;MarkdownSummary"
           verbosity: "Info"
           title: "Code Coverage"
+
+      - name: Debug - List Coverage Report Files
+        run: ls -R ${{ github.workspace }}/coverage-report
+
+      - name: Debug - Output Cobertura.xml
+        run: cat ${{ github.workspace }}/coverage-report/Cobertura.xml
 
       - name: Upload Combined Coverage Report
         uses: actions/upload-artifact@v4
