@@ -160,10 +160,13 @@ jobs:
           name: coverage-TestProject2
           path: coverage-reports/TestProject2
 
+      - name: Debug - List Coverage Files
+        run: ls -R coverage-reports/
+
       - name: Combine Coverage Reports
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
-          reports: "**/*.cobertura.xml"
+          reports: "coverage-reports/**/*.xml" # Adjusted pattern
           targetdir: "${{ github.workspace }}/coverage-report"
           reporttypes: "Cobertura;MarkdownSummary"
           verbosity: "Info"
@@ -178,7 +181,7 @@ jobs:
       - name: Publish Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: "Cobertura.xml"
+          filename: "coverage-report/Cobertura.xml"
           badge: true
           fail_below_min: false
           format: markdown
