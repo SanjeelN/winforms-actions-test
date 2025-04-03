@@ -168,7 +168,10 @@ jobs:
 
       - name: Combine Coverage Reports
         run: |
-          reportgenerator -reports:coverage-reports/**/*.xml -targetdir:coverage-report -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
+          reportgenerator -reports:coverage-reports/**/*.xml -targetdir:coverage-report -reporttypes:"MarkdownSummary;Cobertura"
+
+      - name: Debug - List Coverage Report Files
+        run: ls -R coverage-report/
 
       - name: Upload Combined Coverage Report
         uses: actions/upload-artifact@v4
@@ -176,12 +179,6 @@ jobs:
           name: combined-coverage-report
           path: coverage-report
 
-      - name: Upload Coverage Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-coverage-results
-          path: code-coverage-results.md
-  
-      - name: Output Coverage Results to Summary
-        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+      - name: Publish Coverage Summary
+        run: cat coverage-report/Summary.md >> $GITHUB_STEP_SUMMARY
 
