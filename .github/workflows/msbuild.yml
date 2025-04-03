@@ -43,7 +43,7 @@ jobs:
           dotnet-version: |
             8.x
       - name: "Restore/Build/Test"
-        run: dotnet test -m:2 ./ConsoleApp/ConsoleApp.sln --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+        run: dotnet test ./ConsoleApp/ConsoleApp.sln --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
@@ -102,3 +102,63 @@ jobs:
         with:
           # NOTE: using trx_files instead of files due to https://github.com/EnricoMi/publish-unit-test-result-action/issues/424
           trx_files: "${{ github.workspace }}/**/*.trx"
+
+  test:
+    name: "Run Tests for ${{ matrix.test_project }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test_project:
+          - ./TestProject1/TestProject1.csproj
+          - ./TestProject2/TestProject2.csproj
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+
+      - name: Run Tests with Code Coverage
+        run: |
+          dotnet test ${{ matrix.test_project }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage/
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.test_project }}
+          path: coverage/
+
+  combine-coverage:
+    name: Combine Coverage Reports
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Download Coverage Reports
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-*
+          path: coverage-reports
+
+      - name: Combine Coverage Reports
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
+          reportgenerator -reports:coverage-reports/**/*.cobertura.xml -targetdir:coverage-report -reporttypes:HtmlInline_AzurePipelines;Cobertura
+
+      - name: Upload Combined Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-coverage-report
+          path: coverage-report
+
+      - name: Publish Coverage Summary
+        run: cat coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
