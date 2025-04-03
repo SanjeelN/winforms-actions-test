@@ -139,6 +139,9 @@ jobs:
         with:
           name: coverage-${{ matrix.test_project.name }}
           path: coverage-results/
+      
+      - name: Debug - List Coverage Files
+        run: ls -R coverage-reports/
 
   combine-coverage:
     name: Combine Coverage Reports
