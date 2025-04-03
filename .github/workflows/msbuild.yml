@@ -74,7 +74,7 @@ jobs:
           path: ./SampleConsoleApp/bin/
 
       - name: Run tests
-        run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" SampleTestProject.csproj
 
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
