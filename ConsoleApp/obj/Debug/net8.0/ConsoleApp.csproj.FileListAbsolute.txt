@@ -1,0 +1,15 @@
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\bin\Debug\net8.0\ConsoleApp.exe
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\bin\Debug\net8.0\ConsoleApp.deps.json
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\bin\Debug\net8.0\ConsoleApp.runtimeconfig.json
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\bin\Debug\net8.0\ConsoleApp.dll
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\bin\Debug\net8.0\ConsoleApp.pdb
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.AssemblyInfoInputs.cache
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.AssemblyInfo.cs
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.sourcelink.json
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.dll
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\refint\ConsoleApp.dll
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.pdb
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ConsoleApp.genruntimeconfig.cache
+C:\Dev\GitTests\winforms-actions-test\ConsoleApp\obj\Debug\net8.0\ref\ConsoleApp.dll
