@@ -43,7 +43,7 @@ jobs:
           dotnet-version: |
             8.x
       - name: "Restore/Build/Test"
-        run: dotnet test ./SampleTestProject/SampleTestProject.csproj --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+        run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
