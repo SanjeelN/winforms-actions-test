@@ -119,13 +119,13 @@ jobs:
           dotnet-version: |
             8.x
       - name: "Restore/Build/Test"
-        run: dotnet test --no-restore --logger trx --results-directory "TestResults"
+        run: dotnet test --no-restore --logger trx --results-directory "./TestResults"
 
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-results
-          path: TestResults
+          path: ${{ github.workspace }}/**/TestResults/**/*
 
       - name: Output Test Results
         run: cat TestResults/*.trx
