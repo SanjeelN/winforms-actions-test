@@ -110,14 +110,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: unit tests Layer
-        uses: zyborg/dotnet-tests-report@v1
+        uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
-          project_path: ./TestProject1/
-          report_name: trial_tests
-          report_title: Test new Tests
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          gist_name: trial_tests.md
-          gist_badge_label: 'Contoso Business: %Counters_passed%/%Counters_total%'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-title: 'Unit Test Results'
+          results-path: ./TestResults/*.trx
+          coverage-threshold: 80
 
 
   # test:
