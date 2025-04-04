@@ -109,10 +109,10 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: unit tests for Contoso Business Layer
+      - name: unit tests Layer
         uses: zyborg/dotnet-tests-report@v1
         with:
-          project_path: ./TestProject1/TestProject1.csproj
+          project_path: ./TestProject1/
           report_name: trial_tests
           report_title: Test new Tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
