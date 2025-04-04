@@ -109,6 +109,18 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.x
+      - name: "Restore/Build/Test"
+        run: dotnet test ./ConsoleApp/ConsoleApp.sln --configuration Release --verbosity normal --logger trx 
+      
       - name: unit tests Layer
         uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
