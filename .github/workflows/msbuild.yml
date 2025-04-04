@@ -103,41 +103,58 @@ jobs:
           # NOTE: using trx_files instead of files due to https://github.com/EnricoMi/publish-unit-test-result-action/issues/424
           trx_files: "${{ github.workspace }}/**/*.trx"
 
+
   test:
-    name: "Run Tests for ${{ matrix.test_project.name }}"
-    runs-on: ubuntu-latest
+    name: test suite
     permissions: write-all
-    strategy:
-      fail-fast: false
-      matrix:
-        test_project:
-          - name: TestProject1
-            path: ./TestProject1/TestProject1.csproj
-          - name: TestProject2
-            path: ./TestProject2/TestProject2.csproj
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v4
+      - name: unit tests for Contoso Business Layer
+        uses: zyborg/dotnet-tests-report@v1
         with:
-          fetch-depth: 0
+          project_path: ./TestProject1/TestProject1.csproj
+          report_name: trial_tests
+          report_title: Test new Tests
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_name: trial_tests.md
+          gist_badge_label: 'Contoso Business: %Counters_passed%/%Counters_total%'
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.x
 
-      - name: Run Tests with Code Coverage
-        run: |
-          dotnet test ${{ matrix.test_project.path }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/
+  # test:
+  #   name: "Run Tests for ${{ matrix.test_project.name }}"
+  #   runs-on: ubuntu-latest
+  #   permissions: write-all
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       test_project:
+  #         - name: TestProject1
+  #           path: ./TestProject1/TestProject1.csproj
+  #         - name: TestProject2
+  #           path: ./TestProject2/TestProject2.csproj
 
-      - name: Debug - List Coverage Files
-        run: ls -R coverage-results/
+  #   steps:
+  #     - name: Check out the code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.test_project.name }}
-          path: coverage-results/
-          retention-days: 1
+  #     - name: Setup .NET
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: |
+  #           8.x
+
+  #     - name: Run Tests with Code Coverage
+  #       run: |
+  #         dotnet test ${{ matrix.test_project.path }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/
+
+  #     - name: Debug - List Coverage Files
+  #       run: ls -R coverage-results/
+
+  #     - name: Upload Coverage Report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: coverage-${{ matrix.test_project.name }}
+  #         path: coverage-results/
+  #         retention-days: 1
