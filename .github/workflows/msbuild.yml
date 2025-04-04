@@ -120,13 +120,19 @@ jobs:
             8.x
       - name: "Restore/Build/Test"
         run: dotnet test ./ConsoleApp/ConsoleApp.sln --configuration Release --verbosity normal --logger trx 
-      
+    
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ./TestResults/TestResults.trx
+
       - name: unit tests Layer
         uses: bibipkins/dotnet-test-reporter@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           comment-title: 'Unit Test Results'
-          results-path: ./TestResults/*.trx
+          results-path: ./TestResults/*TestResults.trx
           coverage-threshold: 80
 
 
