@@ -119,21 +119,22 @@ jobs:
           dotnet-version: |
             8.x
       - name: "Restore/Build/Test"
-        run: dotnet test ./ConsoleApp/ConsoleApp.sln --configuration Release --verbosity normal --logger trx 
-    
-      - name: Upload Test Results
+        run: dotnet test --no-restore --logger trx --results-directory "TestResults"
+
+      - name: Upload dotnet test results
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: ./TestResults/TestResults.trx
+          name: dotnet-results
+          path: TestResults
 
-      - name: unit tests Layer
-        uses: bibipkins/dotnet-test-reporter@v1.4.0
+      - name: Output Test Results
+        run: cat TestResults/*.trx
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.18.0
+        if: always()
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          comment-title: 'Unit Test Results'
-          results-path: ./TestResults/*TestResults.trx
-          coverage-threshold: 80
+          trx_files: "${{ github.workspace }}/**/*.trx"
 
 
   # test:
