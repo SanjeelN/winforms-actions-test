@@ -28,8 +28,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 24.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/GoWlNdlHVddnqknzcb3MhlhG1jSvYh4q5tnCaAUdh7cw2JVOpJ/api/v3/index.json": {},
           "https://pkgs.dev.azure.com/vulcansteel/_packaging/Vulcan/nuget/v3/index.json": {}
         },
         "frameworks": {
