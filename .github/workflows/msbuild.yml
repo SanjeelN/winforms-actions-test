@@ -140,6 +140,12 @@ jobs:
       with:
         name: dotnet-results-${{ matrix.test_project.name}}
         path: TestResults-${{ matrix.test_project.name }}
+    - name: Install dotnet-coverage Tool
+      run: dotnet tool install --global dotnet-coverage
+
+    - name: Merge Coverage Files
+      run: dotnet-coverage merge "**/*.coverage" --output merged.xml --output-format xml
+
   TestComplete:
     needs: TestReady
     permissions: write-all
