@@ -148,12 +148,22 @@ jobs:
       with:
         name: dotnet-results-${{ matrix.test-suite}}
         path: TestResults-${{ matrix.test-suite }}
-      if: ${{ always() }}
-        dotnet tool install --global dotnet-coverage
-        dotnet-coverage merge *.trx --rescurse --output merged.trx     
-    - name: Debug - List TRX Files
-      run: ls -R *.trx
-
+    #   if: ${{ always() }}
+    #     dotnet tool install --global dotnet-coverage
+    #     dotnet-coverage merge *.trx --rescurse --output merged.trx     
+    # - name: Debug - List TRX Files
+    #   run: ls -R *.trx
+  TestComplete:
+    needs: TestReady
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder Step
+        run: |
+          dotnet tool install --global dotnet-coverage
+          dotnet-coverage merge *.trx --rescurse --output merged.trx
+          ls -R *.trx
+      
 
 
   # test:
