@@ -138,7 +138,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run Tests
-      working-directory: ./SampleTestProject
       run: dotnet test
     - name: Install dependencies
       run: dotnet restore
