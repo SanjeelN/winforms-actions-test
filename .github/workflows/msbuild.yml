@@ -159,8 +159,8 @@ jobs:
       #     name: merged-test-results
       #     path: merged.xml
 
-      # - name: Install dotnet-coverage Tool
-      #   run: dotnet tool install --global dotnet-coverage
+      - name: Install dotnet-coverage Tool
+        run: dotnet tool install --global dotnet-coverage
 
       - name: Merge Coverage Files
         run: dotnet-coverage merge **/*.coverage --recursive --output merged.xml --output-format xml
