@@ -130,6 +130,9 @@ jobs:
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Test with dotnet
       run: dotnet test ${{matrix.test_project.path}} --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" 
     - name: Upload dotnet test results
