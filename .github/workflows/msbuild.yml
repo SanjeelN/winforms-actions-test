@@ -140,11 +140,6 @@ jobs:
       with:
         name: dotnet-results-${{ matrix.test_project.name}}
         path: TestResults-${{ matrix.test_project.name }}
-    #   if: ${{ always() }}
-    #     dotnet tool install --global dotnet-coverage
-    #     dotnet-coverage merge *.trx --rescurse --output merged.trx     
-    # - name: Debug - List TRX Files
-    #   run: ls -R *.trx
   TestComplete:
     needs: TestReady
     permissions: write-all
@@ -153,7 +148,7 @@ jobs:
       - name: Placeholder Step
         run: |
           dotnet tool install --global dotnet-coverage
-          dotnet-coverage merge *.xml --rescurse --output merged.xml
+          dotnet-coverage merge *.xml --rescurse --output merged.xml -- output-format xml
 
       - name: Debug - List TRX Files
         run: ls -R *.xml
