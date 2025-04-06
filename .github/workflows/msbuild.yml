@@ -134,7 +134,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Test with dotnet
-      run: dotnet test ${{matrix.test_project.path}} --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" 
+      run: dotnet test ${{ matrix.test_project.path }} --logger "trx;LogFileName=TestResults.xml" --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
@@ -153,23 +153,16 @@ jobs:
       - name: Placeholder Step
         run: |
           dotnet tool install --global dotnet-coverage
-          dotnet-coverage merge *.trx --rescurse --output merged.trx
+          dotnet-coverage merge *.xml --rescurse --output merged.xml
 
       - name: Debug - List TRX Files
-        run: ls -R *.trx
+        run: ls -R *.xml
 
       - name: Upload Merged Test Results
         uses: actions/upload-artifact@v4
         with:
           name: merged-test-results
-          path: merged.trx
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.18.0
-        if: always()
-        with:
-          # NOTE: using trx_files instead of files due to https://github.com/EnricoMi/publish-unit-test-result-action/issues/424
-          trx_files: "${{ github.workspace }}/**/*.trx"
+          path: merged.xml
       
 
 
