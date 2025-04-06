@@ -104,37 +104,57 @@ jobs:
           trx_files: "${{ github.workspace }}/**/*.trx"
 
 
-  test:
+  TestFirstRun:
     name: test suite
+    strategy:
+      fail-fast: false
+      matrix:
+        test_project:
+          - name: TestProject1
+            path: ./TestProject1/TestProject1.csproj
+          - name: TestProject2
+            path: ./TestProject2/TestProject2.csproj
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Check out the code
-        uses: actions/checkout@v4
+        uses: actions/setup-dotnet@v4
         with:
-            fetch-depth: 0        
+            dotnet-version: |
+              '8.0.x'        
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             8.x
-      - name: "Restore/Build/Test"
-        run: dotnet test ./ConsoleApp/ConsoleApp.sln --logger trx --results-directory "${{ github.workspace }}/TestResults"
 
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotnet-results
-          path: ${{ github.workspace }}/**/TestResults/**/*
+  TestReady: 
+    permissions: write-all
+    strategy:
+      matrix:
+        test-suite: ['./TestProject1/TestProject1.csproj', './TestProject2/TestProject2.csproj']
+    name: Test Suite ${{ matrix.test-suite }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Tests
+      working-directory: ./SampleTestProject
+      run: dotnet test
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Test with dotnet
+      run: dotnet test ${{matrix.test-suite}} --no-restore --logger trx --results-directory "TestResults-${{ matrix.test-suite }}"
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotnet-results-${{ matrix.test-suite}}
+        path: TestResults-${{ matrix.test-suite }}
+      if: ${{ always() }}
+        dotnet tool install --global dotnet-coverage
+        dotnet-coverage merge *.trx --rescurse --output merged.trx     
+    - name: Debug - List TRX Files
+      run: ls -R *.trx
 
-      - name: Output Test Results
-        run: cat TestResults/*.trx
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.18.0
-        if: always()
-        with:
-          trx_files: "${{ github.workspace }}/**/*.trx"
 
 
   # test:
