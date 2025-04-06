@@ -106,14 +106,6 @@ jobs:
 
   TestFirstRun:
     name: test suite
-    strategy:
-      fail-fast: false
-      matrix:
-        test_project:
-          - name: TestProject1
-            path: ./TestProject1/TestProject1.csproj
-          - name: TestProject2
-            path: ./TestProject2/TestProject2.csproj
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
