@@ -140,22 +140,35 @@ jobs:
       with:
         name: dotnet-results-${{ matrix.test_project.name}}
         path: TestResults-${{ matrix.test_project.name }}
-    - name: Install dotnet-coverage Tool
-      run: dotnet tool install --global dotnet-coverage
-
-    - name: Merge Coverage Files
-      run: dotnet-coverage merge "**/*.coverage" --output merged.xml --output-format xml
-
+    
   TestComplete:
     needs: TestReady
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
       - name: Install dotnet-coverage Tool
         run: dotnet tool install --global dotnet-coverage
 
+      - name: Download Test Results for TestProject1
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-results-TestProject1
+          path: TestResults/TestProject1
+
+      - name: Download Test Results for TestProject2
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-results-TestProject2
+          path: TestResults/TestProject2
+
+      - name: Debug - List Downloaded Test Results
+        run: ls -R TestResults/
+
       - name: Merge Coverage Files
-        run: dotnet-coverage merge "**/*.coverage" --output merged.xml --output-format xml
+        run: dotnet-coverage merge "TestResults/**/*.coverage" --output merged.xml --output-format xml
 
       - name: Debug - Output Merged Coverage File
         run: cat merged.xml
