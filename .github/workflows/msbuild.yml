@@ -168,7 +168,7 @@ jobs:
         run: ls -R TestResults/
 
       - name: Merge Coverage Files
-        run: dotnet-coverage merge "TestResults/**/*.coverage" --output merged.xml --output-format xml
+        run: dotnet-coverage merge "TestResults/**/*.cobertura.xml" --output merged.xml --output-format xml
 
       - name: Debug - Output Merged Coverage File
         run: cat merged.xml
