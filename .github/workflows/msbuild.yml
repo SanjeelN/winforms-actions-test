@@ -130,12 +130,10 @@ jobs:
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
-    - name: Run Tests
-      run: dotnet test
     - name: Install dependencies
       run: dotnet restore
     - name: Test with dotnet
-      run: dotnet test ${{matrix.test_project.path}}  --configuration ${{ env.BUILD_CONFIGURATION }}  --no-restore --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/ --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal
+      run: dotnet test ${{matrix.test_project.path}}  --no-restore --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
