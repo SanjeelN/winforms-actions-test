@@ -120,8 +120,12 @@ jobs:
     permissions: write-all
     strategy:
       matrix:
-        test-suite: ['./TestProject1/TestProject1.csproj', './TestProject2/TestProject2.csproj']
-    name: Test Suite ${{ matrix.test-suite }}
+        test_project:
+          - name: TestProject1
+            path: ./TestProject1/TestProject1.csproj
+          - name: TestProject2
+            path: ./TestProject2/TestProject2.csproj
+    name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
     - name: Run Tests
@@ -129,12 +133,12 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Test with dotnet
-      run: dotnet test ${{matrix.test-suite}} --no-restore --logger trx --results-directory "TestResults-${{ matrix.test-suite }}"
+      run: dotnet test ${{matrix.test_project.path}} --no-restore --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/ --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
-        name: dotnet-results-${{ matrix.test-suite}}
-        path: TestResults-${{ matrix.test-suite }}
+        name: dotnet-results-${{ matrix.test_project.name}}
+        path: TestResults-${{ matrix.test_project.name }}
     #   if: ${{ always() }}
     #     dotnet tool install --global dotnet-coverage
     #     dotnet-coverage merge *.trx --rescurse --output merged.trx     
