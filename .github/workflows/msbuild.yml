@@ -130,10 +130,8 @@ jobs:
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
-    - name: Install dependencies
-      run: dotnet restore
     - name: Test with dotnet
-      run: dotnet test ${{matrix.test_project.path}}  --no-restore --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" 
+      run: dotnet test ${{matrix.test_project.path}} --logger trx --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage" 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
