@@ -148,16 +148,16 @@ jobs:
       - name: Placeholder Step
         run: |
           dotnet tool install --global dotnet-coverage
-          dotnet-coverage merge *.xml --rescurse --output merged.xml -- output-format xml
+          dotnet-coverage merge *.coverage --recursive --output merged.coverage 
 
       - name: Debug - List TRX Files
-        run: ls -R *.xml
+        run: ls -R *.coverage
 
       - name: Upload Merged Test Results
         uses: actions/upload-artifact@v4
         with:
           name: merged-test-results
-          path: merged.xml
+          path: merged.coverage
       
 
 
