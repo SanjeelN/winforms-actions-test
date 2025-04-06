@@ -10,12 +10,6 @@ namespace TestProject2
         }
 
         [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-        [Test]
         public void PassingTest()
         {
             // Arrange
