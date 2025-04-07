@@ -132,15 +132,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+
     - name: Test with dotnet
       run: dotnet test ${{ matrix.test_project.path }} --logger "trx;LogFileName=TestResults.xml" --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage"
+
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
         name: dotnet-results-${{ matrix.test_project.name}}
         path: TestResults-${{ matrix.test_project.name }}
+        
     - name: Publish Test Results     
       uses: EnricoMi/publish-unit-test-result-action@v2.19.0
       if: always()
