@@ -2,3 +2,6 @@
 TestProject2/bin
 TestProject2/obj
 TestProject1/obj
+ConsoleApp/bin/Debug
+ConsoleApp/obj/Debug/net8.0
+TestProject1/bin/Debug/net8.0
