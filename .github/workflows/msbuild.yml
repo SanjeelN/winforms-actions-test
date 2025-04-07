@@ -94,18 +94,6 @@ jobs:
       - name: Debug - List Downloaded Test Results
         run: ls -R TestResults/
 
-      # - name: Merge Coverage Files
-      #   run: dotnet-coverage merge "TestResults/**/*.cobertura.xml" --output merged.xml --output-format xml
-
-      # - name: Debug - Output Merged Coverage File
-      #   run: cat merged.xml
-
-      # - name: Upload Merged Test Results
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: merged-test-results
-      #     path: merged.xml
-
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
@@ -117,12 +105,14 @@ jobs:
           tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
           customSettings: "" # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
+
       - name: Upload Combined Coverage XML
         uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: ${{ github.workspace }}/Cobertura.xml
           retention-days: 5
+
       - name: Publish Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
@@ -134,7 +124,8 @@ jobs:
           hide_complexity: false
           indicators: true
           output: both
-          thresholds: "10 30"
+          thresholds: "10 60"
+
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
