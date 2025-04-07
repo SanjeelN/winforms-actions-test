@@ -7,17 +7,17 @@ public class Calc
         return a + b;
     }
 
-    public int subtract(int a, int b)
+    public int Subtract(int a, int b)
     {
         return a - b;
     }
 
-    public int multiply(int a, int b)
+    public int Multiply(int a, int b)
     {
         return a * b;
     }
 
-    public int divide(int a, int b)
+    public int Divide(int a, int b)
     {
         if (b == 0)
         {
@@ -25,12 +25,12 @@ public class Calc
         }
         return a / b;
     }
-    public int modulus(int a, int b)
+    public int Modulus(int a, int b)
     {
         return a % b;
     }
 
-    public int power(int a, int b)
+    public int Power(int a, int b)
     {
         return (int)Math.Pow(a, b);
     }

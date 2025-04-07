@@ -27,7 +27,7 @@ namespace TestProject1
         public void ModulusTest()
         {
             var calc = new Calc();
-            var result = calc.modulus(3, 28);
+            var result = calc.Modulus(3, 28);
             Assert.That(result, Is.EqualTo(3));
         }
     }

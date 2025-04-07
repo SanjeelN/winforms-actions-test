@@ -14,15 +14,9 @@ public class BankAccount
         m_balance = balance;
     }
 
-    public string CustomerName
-    {
-        get { return m_customerName; }
-    }
+    public string CustomerName => m_customerName;
 
-    public double Balance
-    {
-        get { return m_balance; }
-    }
+    public double Balance => m_balance;
 
     public static void Main()
     {

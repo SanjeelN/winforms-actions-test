@@ -33,7 +33,7 @@ namespace TestProject2
         public void MultiplicationTest()
         {
             var calc = new Calc();
-            var result = calc.multiply(4, 6);
+            var result = calc.Multiply(4, 6);
             Assert.That(result, Is.EqualTo(24));
         }
     }
