@@ -30,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Check out the code
         uses: actions/setup-dotnet@v4
         with:
@@ -69,7 +67,7 @@ jobs:
         files: "TestResults-${{ matrix.test_project.name }}/TestResults.xml"
     
   Publish-Test-Results:
-    needs: RunTests
+    needs: Run-Tests
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
