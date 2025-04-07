@@ -24,69 +24,111 @@ permissions:
   contents: read
   
 jobs:
-  build:
-    name: Build
+  Prepare-net:
+    name: test suite
     permissions: write-all
-
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ['8.0.x']
     steps:
       - uses: actions/checkout@v4
-
-      - name: Debug - List Matchers Directory
-        run: ls -la .github
-        
-      - name: Enable problem matchers
-        run: echo "::add-matcher::.github/matchers/dotnet.json"     
-
-      - name: Install dependencies
-        working-directory: ./SampleConsoleApp
-        run: dotnet restore
-        
-      - name: Build
-        working-directory: ./SampleConsoleApp
-        run: dotnet build --no-restore
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Check out the code
+        uses: actions/setup-dotnet@v4
         with:
-          name: build-artifacts
-          path: ./SampleConsoleApp/bin/
- 
+            dotnet-version: |
+              8.x
 
-  test:
-    needs: build
+  Run-Tests: 
+    needs: Prepare-net
     permissions: write-all
     strategy:
       matrix:
-        test-suite: ['SampleTest1', 'SampleTest2']
-    name: Test Suite ${{ matrix.test-suite }}
+        test_project:
+          - name: TestProject1
+            path: ./TestProject1/TestProject1.csproj
+          - name: TestProject2
+            path: ./TestProject2/TestProject2.csproj
+    name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Download build artifacts
+    - name: Test with dotnet
+      run: dotnet test ${{ matrix.test_project.path }} --logger "trx;LogFileName=TestResults.xml" --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage"
+
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotnet-results-${{ matrix.test_project.name}}
+        path: TestResults-${{ matrix.test_project.name }}
+
+    - name: Publish Test Results     
+      uses: EnricoMi/publish-unit-test-result-action@v2.19.0
+      if: always()
+      with:
+        files: "TestResults-${{ matrix.test_project.name }}/TestResults.xml"
+    
+  Publish-Test-Results:
+    needs: Run-Tests
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Install dotnet-coverage Tool
+        run: dotnet tool install --global dotnet-coverage
+
+      - name: Download Test Results for TestProject1
         uses: actions/download-artifact@v4
         with:
-          name: build-artifacts
-          path: ./SampleConsoleApp/bin/
+          name: dotnet-results-TestProject1
+          path: TestResults/TestProject1
 
-      - name: Run Tests
-        working-directory: ./SampleTestProject
-        run: dotnet test --filter "TestCategory=${{ matrix.test-suite }}" --configuration Release -v minimal --no-build --logger GitHubActions '/p:CollectCoverage=true;CoverletOutputFormat="json,lcov,cobertura";MergeWith=${{github.workspace}}/coverage.json;CoverletOutput=${{github.workspace}}/coverage' tests/Sonos.Base.Tests -- RunConfiguration.CollectSourceInformation=true
-
-      - name: 📝 Code Coverage report
-        run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.1.23
-          reportgenerator -reports:${{github.workspace}}/coverage.cobertura.xml -targetdir:${{github.workspace}}/report -reporttypes:MarkdownSummaryGithub "-filefilters:-*.g.cs" -verbosity:Warning
-          sed -i 's/# Summary/## 📝 Code Coverage/g' ${{github.workspace}}/report/SummaryGithub.md
-          sed -i 's/## Coverage/### Code Coverage details/g' ${{github.workspace}}/report/SummaryGithub.md
-          cat ${{github.workspace}}/report/*.md >> $GITHUB_STEP_SUMMARY 
-
-      - name: Publish Test Results     
-        uses: EnricoMi/publish-unit-test-result-action@v2.19.0
-        if: always()
+      - name: Download Test Results for TestProject2
+        uses: actions/download-artifact@v4
         with:
-          trx_files: "${{ github.workspace }}/**/*.trx"
+          name: dotnet-results-TestProject2
+          path: TestResults/TestProject2
+
+      - name: Debug - List Downloaded Test Results
+        run: ls -R TestResults/ 
+
+      - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
+        uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
+        with:
+          reports: "**/*.cobertura.xml" #globbing to merge
+          targetdir: "${{ github.workspace }}" 
+          reporttypes: "Cobertura" 
+          verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
+          title: "Code Coverage" # Optional title.
+          tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
+          toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
+
+      - name: Upload Combined Coverage XML
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: ${{ github.workspace }}/Cobertura.xml
+          retention-days: 5
+
+      - name: Publish Code Coverage Report #this outputs to markdowns
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: "Cobertura.xml"
+          badge: true
+          fail_below_min: false # just informative for now
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: false
+          indicators: true
+          output: both
+          thresholds: "10 60"
+     
+      - name: Upload Coverage Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-results
+          path: code-coverage-results.md
+
+      - name: Output Coverage Results to Summary
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+      
