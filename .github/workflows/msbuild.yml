@@ -38,7 +38,7 @@ jobs:
             dotnet-version: |
               8.x
 
-  RunTests: 
+  Run-Tests: 
     needs: Prepare-net
     permissions: write-all
     strategy:
@@ -68,7 +68,7 @@ jobs:
       with:
         files: "TestResults-${{ matrix.test_project.name }}/TestResults.xml"
     
-  TestComplete:
+  Publish-Test-Results:
     needs: RunTests
     permissions: write-all
     runs-on: ubuntu-latest
