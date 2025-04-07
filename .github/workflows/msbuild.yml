@@ -97,13 +97,12 @@ jobs:
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
-          reports: "**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
-          targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
-          reporttypes: "Cobertura" # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, JsonSummary, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, PngChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
+          reports: "**/*.cobertura.xml" 
+          targetdir: "${{ github.workspace }}" 
+          reporttypes: "Cobertura" 
           verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
           title: "Code Coverage" # Optional title.
           tag: "${{ github.run_number }}_${{ github.run_id }}" # Optional tag or build version.
-          customSettings: "" # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
       - name: Upload Combined Coverage XML
@@ -141,43 +140,3 @@ jobs:
       - name: Output Coverage Results to Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
       
-
-
-  # test:
-  #   name: "Run Tests for ${{ matrix.test_project.name }}"
-  #   runs-on: ubuntu-latest
-  #   permissions: write-all
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       test_project:
-  #         - name: TestProject1
-  #           path: ./TestProject1/TestProject1.csproj
-  #         - name: TestProject2
-  #           path: ./TestProject2/TestProject2.csproj
-
-  #   steps:
-  #     - name: Check out the code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Setup .NET
-  #       uses: actions/setup-dotnet@v4
-  #       with:
-  #         dotnet-version: |
-  #           8.x
-
-  #     - name: Run Tests with Code Coverage
-  #       run: |
-  #         dotnet test ${{ matrix.test_project.path }} --configuration ${{ env.BUILD_CONFIGURATION }} --verbosity normal --logger trx --collect:"XPlat Code Coverage" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=coverage-results/
-
-  #     - name: Debug - List Coverage Files
-  #       run: ls -R coverage-results/
-
-  #     - name: Upload Coverage Report
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: coverage-${{ matrix.test_project.name }}
-  #         path: coverage-results/
-  #         retention-days: 1
