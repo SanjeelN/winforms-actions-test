@@ -16,7 +16,7 @@ namespace TestProject1
         }
         
         [Test]
-        public void Test2()
+        public void AdditionTest()
         {
             var calc = new Calc();
             var result = calc.Add(2, 3);
