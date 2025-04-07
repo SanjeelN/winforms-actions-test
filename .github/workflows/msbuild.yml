@@ -109,7 +109,7 @@ jobs:
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
-          reports: "**/*.cobertura.xml" 
+          reports: "**/*.cobertura.xml" #globbing to merge
           targetdir: "${{ github.workspace }}" 
           reporttypes: "Cobertura" 
           verbosity: "Info" # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
