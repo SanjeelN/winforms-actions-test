@@ -94,6 +94,18 @@ jobs:
       - name: Debug - List Downloaded Test Results
         run: ls -R TestResults/
 
+      - name: Merge Coverage Files
+        run: dotnet-coverage merge "TestResults/**/*.cobertura.xml" --output merged.xml --output-format xml
+
+      - name: Debug - Output Merged Coverage File
+        run: cat merged.xml
+
+      - name: Upload Merged Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: merged-test-results
+          path: merged.xml   
+
       - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.5
         with:
