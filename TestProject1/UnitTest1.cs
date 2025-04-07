@@ -22,5 +22,13 @@ namespace TestProject1
             var result = calc.Add(2, 3);
             Assert.That(result, Is.EqualTo(5));
         }
+
+        [Test]
+        public void ModulusTest()
+        {
+            var calc = new Calc();
+            var result = calc.modulus(3, 28);
+            Assert.That(result, Is.EqualTo(3));
+        }
     }
 }

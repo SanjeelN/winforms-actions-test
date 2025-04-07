@@ -25,4 +25,13 @@ public class Calc
         }
         return a / b;
     }
+    public int modulus(int a, int b)
+    {
+        return a % b;
+    }
+
+    public int power(int a, int b)
+    {
+        return (int)Math.Pow(a, b);
+    }
 }
