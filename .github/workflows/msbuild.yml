@@ -145,7 +145,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.19.0
       if: always()
       with:
-        files: "TestResults-${{ matrix.test_project.name }}"
+        files: "TestResults.xml"
     
   TestComplete:
     needs: RunTests
