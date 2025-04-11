@@ -60,7 +60,7 @@ jobs:
     - name: run ps1 script
       if: ${{ matrix.test_project.run_ps1 == true }}
       run: |
-        pwsh -File ./testscripts.ps1
+        pwsh -File ./testscript.ps1
 
     - name: Test with dotnet
       run: dotnet test ${{ matrix.test_project.path }} --logger "trx;LogFileName=TestResults.xml" --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage"
