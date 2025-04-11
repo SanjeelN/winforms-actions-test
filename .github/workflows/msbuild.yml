@@ -44,8 +44,10 @@ jobs:
         test_project:
           - name: TestProject1
             path: ./TestProject1/TestProject1.csproj
+            run_ps1: false
           - name: TestProject2
             path: ./TestProject2/TestProject2.csproj
+            run_ps1: false
           - name: TestProject3
             path: ./TestProject3/TestProject3.csproj
             run_ps1: true
