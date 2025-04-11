@@ -60,7 +60,6 @@ jobs:
     - name: run ps1 script
       if: ${{ matrix.test_project.run_ps1 == true }}
       run: |
-        pwsh -Command "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process"
         pwsh -File ./testscripts.ps1
 
     - name: Test with dotnet
