@@ -48,6 +48,8 @@ jobs:
             path: ./TestProject2/TestProject2.csproj
           - name: TestProject3
             path: ./TestProject3/TestProject3.csproj
+          - name: TestProject4
+            path: ./TestProject4/TestProject4.csproj
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
@@ -96,6 +98,12 @@ jobs:
         with:
           name: dotnet-results-TestProject3
           path: TestResults/TestProject3
+
+      - name: Download Test Results for TestProject4
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-results-TestProject4
+          path: TestResults/TestProject4
 
       - name: Debug - List Downloaded Test Results
         run: ls -R TestResults/ 

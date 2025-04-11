@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-
-namespace TestProject3
+namespace TestProject4
 {
     public class Tests
     {
@@ -24,7 +22,7 @@ namespace TestProject3
 
             // Act
             Console.WriteLine("Performing test action...");
-            System.Threading.Thread.Sleep(100); // Simulate some work
+            System.Threading.Thread.Sleep(150); // Simulate some work
 
             // Assert
             Console.WriteLine("Verifying results...");
