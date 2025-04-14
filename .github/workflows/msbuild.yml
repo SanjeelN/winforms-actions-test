@@ -44,12 +44,25 @@ jobs:
         test_project:
           - name: TestProject1
             path: ./TestProject1/TestProject1.csproj
+            run_ps1: false
           - name: TestProject2
             path: ./TestProject2/TestProject2.csproj
+            run_ps1: false
+          - name: TestProject3
+            path: ./TestProject3/TestProject3.csproj
+            run_ps1: true
+          - name: TestProject4
+            path: ./TestProject4/TestProject4.csproj
+            run_ps1: true
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
+    - name: run ps1 script
+      if: ${{ matrix.test_project.run_ps1 == true }}
+      run: |
+        pwsh -File ./testscript.ps1
 
     - name: Test with dotnet
       run: dotnet test ${{ matrix.test_project.path }} --logger "trx;LogFileName=TestResults.xml" --results-directory "TestResults-${{ matrix.test_project.name }}" --collect:"XPlat Code Coverage"
@@ -88,6 +101,18 @@ jobs:
         with:
           name: dotnet-results-TestProject2
           path: TestResults/TestProject2
+
+      - name: Download Test Results for TestProject3
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-results-TestProject3
+          path: TestResults/TestProject3
+
+      - name: Download Test Results for TestProject4
+        uses: actions/download-artifact@v4
+        with:
+          name: dotnet-results-TestProject4
+          path: TestResults/TestProject4
 
       - name: Debug - List Downloaded Test Results
         run: ls -R TestResults/ 
