@@ -42,10 +42,10 @@ jobs:
         run: dotnet restore ./ConsoleApp
 
       - name: Build the project
-        run: dotnet ./ConsoleApp  build --configuration Release
-  
+        run: dotnet build ./ConsoleApp --configuration Release
+
       - name: Publish the project
-        run: dotnet ./ConsoleApp  publish --no-build -o ./artifacts --configuration Release
+        run: dotnet publish ./ConsoleApp --no-build -o ./artifacts --configuration Release
   
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
