@@ -39,13 +39,13 @@ jobs:
               8.x
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet ./ConsoleApp restore
 
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: dotnet ./ConsoleApp  build --configuration Release
   
       - name: Publish the project
-        run: dotnet publish --no-build -o ./artifacts --configuration Release
+        run: dotnet ./ConsoleApp  publish --no-build -o ./artifacts --configuration Release
   
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
