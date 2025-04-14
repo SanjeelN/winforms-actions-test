@@ -156,4 +156,16 @@ jobs:
 
       - name: Output Coverage Results to Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-      
+  Update-Version:
+    needs: Publish-Test-Results
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Update Version
+        run: |
+          # Update the version in the .csproj file
+          dotnet tool install --global dotnet-gitversion-tool --version 5.6.11
+          gitversion /updateprojectversion /config ./GitVersion.yml /verbosity normal /output json /output buildserver /noappend /nofetch /skiprepoinfo /skipversionfileupdate /skiptagupdate /skipbranchupdate /skipcommitupdate /skiptagging /skipfetchingtags /skipfetchingbranches /skipfetchingcommits /skipfetchingremotes /skipfetchingallremotes /skipfetchingallbranches /skipfetchingalltags /skipfetchingallcommits /skipfetchingallremotesandbranchesandtagsandcommits    
