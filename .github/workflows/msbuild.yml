@@ -45,7 +45,7 @@ jobs:
         run: dotnet build ./ConsoleApp --configuration Release
 
       - name: Publish the project
-        run: nbgv prepare-release
+        run: .\nbgv.exe prepare-release
   
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
