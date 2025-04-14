@@ -35,6 +35,20 @@ jobs:
         with:
             dotnet-version: |
               8.x
+              - name: Restore dependencies
+              run: dotnet restore
+        
+      - name: Build the project
+        run: dotnet build --configuration Release
+  
+      - name: Publish the project
+        run: dotnet publish --no-build -o ./artifacts --configuration Release
+  
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-artifacts
+          path: ./artifacts
 
   Run-Tests: 
     needs: Prepare-net
@@ -59,10 +73,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # Fetch all history for all branches and tags
-
-    - name: Setup dotnet
-      run: dotnet build ./ConsoleApp -c Release
+        fetch-depth: 0 # Fetch all history for all branches and tags  
 
     - name: run ps1 script
       if: ${{ matrix.test_project.run_ps1 == true }}
