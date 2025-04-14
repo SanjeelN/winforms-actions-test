@@ -38,9 +38,6 @@ jobs:
             dotnet-version: |
               8.x
 
-      - name: Restore dependencies
-        run: dotnet ./ConsoleApp restore
-
       - name: Build the project
         run: dotnet ./ConsoleApp  build --configuration Release
   
