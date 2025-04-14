@@ -59,6 +59,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Setup dotnet
+      run: dotnet build -c Release
+
     - name: run ps1 script
       if: ${{ matrix.test_project.run_ps1 == true }}
       run: |
