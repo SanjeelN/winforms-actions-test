@@ -163,9 +163,13 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v4
-
-      - name: Update Version
-        run: |
-          # Update the version in the .csproj file
-          dotnet tool install --global dotnet-gitversion-tool --version 5.6.11
-          gitversion /updateprojectversion /config ./GitVersion.yml /verbosity normal /output json /output buildserver /noappend /nofetch /skiprepoinfo /skipversionfileupdate /skiptagupdate /skipbranchupdate /skipcommitupdate /skiptagging /skipfetchingtags /skipfetchingbranches /skipfetchingcommits /skipfetchingremotes /skipfetchingallremotes /skipfetchingallbranches /skipfetchingalltags /skipfetchingallcommits /skipfetchingallremotesandbranchesandtagsandcommits    
+        with:
+          fetch-depth: 0
+      
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.2.0
+        with:
+          versionSpec: '6.2.x'
+      - name: Determine Version
+        id: version_step # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v3.2.0
