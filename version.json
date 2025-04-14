@@ -5,6 +5,9 @@
     "^refs/heads/master$",
     "^refs/heads/v\\d+(?:\\.\\d+)?$"
   ],
+  "nugetPackageVersion": {
+    "semVer": 2
+},
   "cloudBuild": {
     "buildNumber": {
       "enabled": true
