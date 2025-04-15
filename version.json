@@ -6,11 +6,7 @@
     "^refs/heads/v\\d+(?:\\.\\d+)?$"
   ],
   "nugetPackageVersion": {
-    "semVer": 2
-},
-  "cloudBuild": {
-    "buildNumber": {
-      "enabled": true
-    }
-  }
+    "semVer": 2,
+    "precision": "minor"
+}
 }
