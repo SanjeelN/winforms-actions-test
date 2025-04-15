@@ -8,5 +8,6 @@
   "nuGetPackageVersion": {
     "semVer": 2.0,
     "precision": "minor"
-}
+},
+"gitCommitIdShortAutoMinimum": 7
 }
