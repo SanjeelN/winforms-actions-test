@@ -100,7 +100,7 @@ jobs:
       #   run: dotnet build ./ConsoleApp --configuration Release
 
       - name: Publish the project
-        run: dotnet publish ./ConsoleApp --configuration {{ env.BUILD_CONFIGURATION }}
+        run: dotnet publish ./ConsoleApp --configuration Release
 
       - name: Install dotnet-coverage Tool
         run: dotnet tool install --global dotnet-coverage
