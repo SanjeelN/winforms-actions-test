@@ -5,9 +5,8 @@
     "^refs/heads/main$",
     "^refs/heads/v\\d+(?:\\.\\d+)?$"
   ],
-  "nuGetPackageVersion": {
-    "semVer": 2.0,
-    "precision": "minor"
-},
-"gitCommitIdShortAutoMinimum": 7
+  "nugetPackageVersion": {
+    "semVer": 2,
+    "precision": "build"
+}
 }
