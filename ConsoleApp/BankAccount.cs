@@ -5,18 +5,15 @@
 /// </summary>
 public class BankAccount
 {
-    private readonly string m_customerName;
-    private double m_balance;
-
     public BankAccount(string customerName, double balance)
     {
-        m_customerName = customerName;
-        m_balance = balance;
+        CustomerName = customerName;
+        Balance = balance;
     }
 
-    public string CustomerName => m_customerName;
+    public string CustomerName { get; }
 
-    public double Balance => m_balance;
+    public double Balance { get; }
 
     public static void Main()
     {
