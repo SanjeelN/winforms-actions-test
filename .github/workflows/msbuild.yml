@@ -101,6 +101,9 @@ jobs:
       # - name: Build the project
       #   run: dotnet build ./ConsoleApp --configuration Release
 
+      - name: Nerdbank Versioning
+        run: nbgv get-version  #dotnet publish ${{ env.Solution_Name }} --configuration Release
+
       - name: Publish the project
         run: dotnet publish ./ConsoleApp --configuration Release
 
