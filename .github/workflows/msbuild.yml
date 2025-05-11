@@ -104,8 +104,8 @@ jobs:
       - name: Nerdbank Versioning
         run: nbgv get-version  #dotnet publish ${{ env.Solution_Name }} --configuration Release
 
-      - name: Publish the project
-        run: dotnet publish ./ConsoleApp --configuration Release
+      # - name: Publish the project
+      #   run: dotnet publish ./ConsoleApp --configuration Release
 
       # - name: Install dotnet-coverage Tool
       #   run: dotnet tool install --global dotnet-coverage
