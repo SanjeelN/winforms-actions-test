@@ -107,8 +107,8 @@ jobs:
       - name: Publish the project
         run: dotnet publish ./ConsoleApp --configuration Release
 
-      - name: Install dotnet-coverage Tool
-        run: dotnet tool install --global dotnet-coverage
+      # - name: Install dotnet-coverage Tool
+      #   run: dotnet tool install --global dotnet-coverage
 
       - name: Download Test Results for TestProject1
         uses: actions/download-artifact@v4
