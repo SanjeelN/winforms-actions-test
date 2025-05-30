@@ -18,6 +18,8 @@ public class BankAccount
     public static void Main()
     {
         var ba = new BankAccount("Sanjeel", 11.99);
+        var aa = new BankAccount("Kurt", 11.99);
+
         Console.WriteLine("Current balance is ${0} for {1}", ba.Balance, ba.CustomerName);
     }
 }
