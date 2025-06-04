@@ -59,7 +59,7 @@ jobs:
             path: ./TestProject4/TestProject4.csproj
             run_ps1: true
         exclude:
-          - test_project: ${{ ('TestProject1') && github.env.version != '1.1.1' }}
+          - test_project: ${{ ('TestProject1') }}
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
