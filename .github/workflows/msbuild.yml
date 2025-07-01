@@ -19,6 +19,8 @@ env:
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
+  ACTIONS_STEP_DEBUG: true
+  ACTIONS_RUNNER_DEBUG: true
 
 permissions:
   contents: read
@@ -28,13 +30,52 @@ jobs:
     name: test suite
     permissions: write-all
     runs-on: ubuntu-latest
+    outputs:
+      environments: ${{ steps.set_environment.outputs.environments }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
       - name: Check out the code
         uses: actions/setup-dotnet@v4
         with:
             dotnet-version: |
               8.x
+
+      - name: Set Environments Array
+        id: set_environment
+        env:
+          IS_RELEASE: 'true'
+        run: |
+          if [[ "$IS_RELEASE" == "true" ]]; then
+            echo 'environments=["Staging","Production"]' >> $GITHUB_OUTPUT
+          else
+            echo 'environments=["Staging"]' >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print Environments Array
+        run: |
+          echo "Environments: ${{ steps.set_environment.outputs.environments }}"
+
+  Sign-App-Packages:
+    name: Sign App Win App Packages
+    runs-on: ubuntu-latest
+    needs: [Prepare-net]
+    environment: ${{matrix.environment}}
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      fail-fast: true
+      matrix:
+        environment: ${{ fromJson(needs.Prepare-net.outputs.environments) }}
+
+    steps:
+
+      - name: Print Environments Array
+        run: |
+          echo "Environments: ${{ matrix.environment }}"
+
 
   Run-Tests: 
     needs: Prepare-net
@@ -54,10 +95,14 @@ jobs:
           - name: TestProject4
             path: ./TestProject4/TestProject4.csproj
             run_ps1: true
+        exclude:
+          - test_project: ${{ ('TestProject1') }}
     name: Test Suite ${{ matrix.test_project.name }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetch all history for all branches and tags  
 
     - name: run ps1 script
       if: ${{ matrix.test_project.run_ps1 == true }}
@@ -86,9 +131,23 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags test
 
-      - name: Install dotnet-coverage Tool
-        run: dotnet tool install --global dotnet-coverage
+      # - name: Restore dependencies
+      #   run: dotnet restore ./ConsoleApp
+  
+      # - name: Build the project
+      #   run: dotnet build ./ConsoleApp --configuration Release
+
+      - name: Nerdbank Versioning
+        run: nbgv get-version  #dotnet publish ${{ env.Solution_Name }} --configuration Release
+
+      # - name: Publish the project
+      #   run: dotnet publish ./ConsoleApp --configuration Release
+
+      # - name: Install dotnet-coverage Tool
+      #   run: dotnet tool install --global dotnet-coverage
 
       - name: Download Test Results for TestProject1
         uses: actions/download-artifact@v4
@@ -156,4 +215,3 @@ jobs:
 
       - name: Output Coverage Results to Summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-      

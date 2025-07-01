@@ -1,3 +1,4 @@
+using BankAccountNS;
 using ConsoleApp;
 
 namespace TestProject1
@@ -29,6 +30,14 @@ namespace TestProject1
             var calc = new Calc();
             var result = calc.Modulus(3, 28);
             Assert.That(result, Is.EqualTo(3));
+        }
+        
+        [Test]
+        public void BankAccountTest()
+        {
+            var account = new BankAccount("John Doe", 1000.00);
+            Assert.That(account.CustomerName, Is.EqualTo("John Doe"));
+            Assert.That(account.Balance, Is.EqualTo(1000.00));
         }
     }
 }
