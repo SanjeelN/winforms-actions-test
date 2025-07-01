@@ -45,7 +45,7 @@ jobs:
       - name: Set Environments Array
         id: set_environment
         env:
-          IS_RELEASE: true
+          IS_RELEASE: 'true'
         run: |
           if [[ "$IS_RELEASE" == "true" ]]; then
             echo 'environments=["Staging","Production"]' >> $GITHUB_OUTPUT
