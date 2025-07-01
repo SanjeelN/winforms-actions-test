@@ -40,6 +40,21 @@ jobs:
             dotnet-version: |
               8.x
 
+      - name: Set Environments Array
+        id: set_environment
+        env:
+          IS_RELEASE: true
+        run: |
+          if [[ "$IS_RELEASE" == "true" ]]; then
+            echo 'environments=["Staging","Production"]' >> $GITHUB_OUTPUT
+          else
+            echo 'environments=["Staging"]' >> $GITHUB_OUTPUT
+          fi
+
+      - name: Print Environments Array
+        run: |
+          echo "Environments: ${{ steps.set_environment.outputs.environments }}"
+
   Run-Tests: 
     needs: Prepare-net
     permissions: write-all
