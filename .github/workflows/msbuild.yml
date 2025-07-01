@@ -30,6 +30,8 @@ jobs:
     name: test suite
     permissions: write-all
     runs-on: ubuntu-latest
+    outputs:
+      environments: ${{ steps.set_environment.outputs.environments }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,6 +56,26 @@ jobs:
       - name: Print Environments Array
         run: |
           echo "Environments: ${{ steps.set_environment.outputs.environments }}"
+
+  Sign-App-Packages:
+    name: Sign App Win App Packages
+    runs-on: ubuntu-latest
+    needs: [Prepare-net]
+    environment: ${{matrix.environment}}
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      fail-fast: true
+      matrix:
+        environment: ${{ fromJson(needs.Prepare-net.outputs.environments) }}
+
+    steps:
+
+      - name: Print Environments Array
+        run: |
+          echo "Environments: ${{ matrix.environment }}"
+
 
   Run-Tests: 
     needs: Prepare-net
