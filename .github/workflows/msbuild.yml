@@ -39,6 +39,7 @@ jobs:
     needs: Prepare-net
     permissions: write-all
     strategy:
+      fail-fast: false
       matrix:
         test_project:
           - name: TestProject1
