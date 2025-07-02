@@ -17,6 +17,7 @@ namespace TestProject2
             double beginningBalance = 11.99;
             BankAccount account = new BankAccount("Sanjeel", beginningBalance);
 
+            Assert.Fail("This test is not supposed to fail");
             Assert.That(account.Balance, Is.EqualTo(beginningBalance));
             Assert.That(account.CustomerName, Is.EqualTo("Sanjeel"));
         }
